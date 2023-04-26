@@ -1,0 +1,27 @@
+GET    /users(.:format)                  users#index
+POST   /users(.:format)                  users#create
+GET    /users/:id(.:format)              users#show
+PATCH  /users/:id(.:format)              users#update
+PUT    /users/:id(.:format)              users#update
+DELETE /users/:id(.:format)              users#destroy
+
+GET    /boards(.:format)                 boards#index
+POST   /boards(.:format)                 boards#create
+GET    /boards/:id(.:format)             boards#show
+PATCH  /boards/:id(.:format)             boards#update
+PUT    /boards/:id(.:format)             boards#update
+DELETE /boards/:id(.:format)             boards#destroy
+
+GET    /boards/:board_id/columns(.:format)          columns#index
+POST   /boards/:board_id/columns(.:format)          columns#create
+GET    /boards/:board_id/columns/:id(.:format)      columns#show
+PATCH  /boards/:board_id/columns/:id(.:format)      columns#update
+PUT    /boards/:board_id/columns/:id(.:format)      columns#update
+DELETE /boards/:board_id/columns/:id(.:format)      columns#destroy
+
+GET    /boards/:board_id/columns/:column_id/stories(.:format) stories#index
+POST   /boards/:board_id/columns/:column_id/stories(.:format) stories#create
+GET    /boards/:board_id/columns/:column_id/stories/:id(.:format) stories#show
+PATCH  /boards/:board_id/columns/:column_id/stories/:id(.:format) stories#update
+PUT    /boards/:board_id/columns/:column_id/stories/:id(.:format) stories#update
+DELETE /boards/:board_id/columns/:column_id/stories/:id(.:format) stories#destroy
