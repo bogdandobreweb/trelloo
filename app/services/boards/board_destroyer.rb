@@ -10,8 +10,6 @@ class Boards::BoardDestroyer
 
     @board.destroy
 
-    add_success("Board has been successfully destroyed!")
-    
   rescue StandardError => e
     add_error("Failed to destroy the board! Error: #{e.message}")
     { errors: @errors }

@@ -1,11 +1,52 @@
 class ColumnsController < ApplicationController
+    before_action :set_column, only: [:show, :update, :destroy]
     before_action :authenticate_user!
+  
+    def index
+        columns_collector = Columns::ColumnsCollector.new
+        columns = columns_collector.call
 
-    def create
-        column = Columns::ColumnCreator.new(column_params).call
-        render json: Columns::ColumnCreator.new(column_params).as_json, status: (column[:success] ? :created : :unprocessable_entity)
+        if columns_collector.errors.empty?
+            render json: Columns::ColumnsPresenter.new.as_json, status: :ok
+        else
+            render json: { errors: columns_collector.errors }, status: :bad_request
+        end
     end
-
+    
+    def show
+        render json: Columns::ColumnPresenter.new(set_column.id).as_json, status: :ok
+    end
+  
+    def create
+      column_creator = Columns::ColumnCreator.new(column_params).call
+  
+      if column_creator.errors.empty?
+        render json: Columns::ColumnPresenter.new(column_creator.id).as_json, status: :created
+      else
+        render json: { errors: column_creator.errors }, status: :bad_request
+      end
+    end
+  
+    def update
+      column_updater = Columns::ColumnUpdater.new(@column.id, column_params).call
+  
+      if column_updater.errors.empty?
+        head :no_content
+      else
+        render json: { errors: column_updater.errors }, status: :bad_request
+      end
+    end
+  
+    def destroy
+      column_destroyer = Columns::ColumnDestroyer.new(@column.id).call
+  
+      if column_destroyer.errors.empty?
+        head :no_content
+      else
+        render json: { errors: column_destroyer.errors }, status: :bad_request
+      end
+    end
+  
     private
   
     def set_column
@@ -15,4 +56,5 @@ class ColumnsController < ApplicationController
     def column_params
       params.require(:column).permit(:name, :order_id)
     end
-end
+  end
+  
