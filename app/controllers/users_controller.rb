@@ -1,45 +1,34 @@
 class UsersController < ApplicationController
     before_action :set_user, only: [:show, :update, :destroy]
-  
-    # def index
-    #   users = Users::ViewService.call
-    #   render json: users
-    # end
+    before_action :authenticate_user!
+
+    def index
+        render json: Users::UsersPresenter.new(current_user).as_json
+      end
   
     def show
-      render json: @user
+        render json: Users::UserPresenter.new(current_user).as_json
     end
   
-    # def create
-    #   user = Users::CreateService.call(user_params)
-    #   if user.valid?
-    #     render json: user, status: :created
-    #   else
-    #     render json: user.errors, status: :unprocessable_entity
-    #   end
-    # end
-  
-    # def update
-    #   Users::UpdateService.call(@user, user_params)
-    #   if @user.valid?
-    #     render json: @user
-    #   else
-    #     render json: @user.errors, status: :unprocessable_entity
-    #   end
-    # end
-  
-    # def destroy
-    #   Users::DestroyService.call(@user)
-    #   head :no_content
-    # end
-  
+    def create
+    
+    end
+
+    def update
+    
+    end
+
+    def destroy
+    
+    end
+    
     private
   
     def set_user
-      @user = User.find(params[:id])
+        @user = User.find(params[:id])
     end
   
-    # def user_params
-    #   params.require(:user).permit(:email, :password)
-    # end
+    def user_params
+        params.require(:user).permit(:email, :password)
+    end
   end

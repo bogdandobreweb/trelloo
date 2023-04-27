@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_25_131133) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_26_143519) do
   create_table "access_controls", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "role_id", null: false
     t.bigint "action_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["action_id"], name: "index_access_controls_on_action_id"
+    t.index ["role_id", "action_id"], name: "access_index", unique: true
     t.index ["role_id"], name: "index_access_controls_on_role_id"
   end
 
@@ -27,12 +28,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_131133) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "board_memberships", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+  create_table "board_subscriptions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "board_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["board_id"], name: "index_board_memberships_on_board_id"
+    t.index ["user_id", "board_id"], name: "subscription_index", unique: true
     t.index ["user_id"], name: "index_board_memberships_on_user_id"
   end
 
@@ -44,10 +46,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_131133) do
 
   create_table "columns", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
-    t.bigint "board_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["board_id"], name: "index_columns_on_board_id"
+    t.integer "order_id", null: false
+  end
+
+  create_table "comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "story_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.text "body"
+    t.index ["story_id"], name: "index_comments_on_story_id"
+    t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
   create_table "roles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -61,10 +72,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_131133) do
   create_table "stories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
     t.text "description"
-    t.bigint "column_id", null: false
+    t.bigint "column_id", default: 1, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.bigint "board_id", null: false
+    t.index ["board_id"], name: "index_stories_on_board_id"
     t.index ["column_id"], name: "index_stories_on_column_id"
+    t.index ["user_id"], name: "index_stories_on_user_id"
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -81,9 +96,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_25_131133) do
 
   add_foreign_key "access_controls", "actions"
   add_foreign_key "access_controls", "roles"
-  add_foreign_key "board_memberships", "boards"
-  add_foreign_key "board_memberships", "users"
-  add_foreign_key "columns", "boards"
+  add_foreign_key "board_subscriptions", "boards"
+  add_foreign_key "board_subscriptions", "users"
+  add_foreign_key "comments", "stories"
+  add_foreign_key "comments", "users"
   add_foreign_key "roles", "users"
   add_foreign_key "stories", "columns"
 end

@@ -1,4 +1,4 @@
-class BoardMembershipsController < ApplicationController
+class BoardSubscriptionsController < ApplicationController
     before_action :set_user
 
     # def index

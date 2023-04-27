@@ -1,4 +1,4 @@
-class Users::DestroyService
+class Users::UserDestroyer
     def initialize(user)
       @user = user
     end

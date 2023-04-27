@@ -1,4 +1,4 @@
-class Users::ViewService
+class Users::UserCollector
     def initialize(user)
       @user = user
     end

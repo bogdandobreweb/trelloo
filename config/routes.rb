@@ -1,18 +1,13 @@
 Rails.application.routes.draw do
   devise_for :users
-  
-  # resources :users do
-  #   resources :board_memberships, only: [:index, :create, :destroy]
-  #   resources :boards, only: [:index, :create]
-  # end
 
-  get '/users/:id', to: 'users#show'
-  
+resources :users, only: [:index, :show]
+
   resources :boards do
-    resources :columns do
-      resources :stories 
-    end
+      resources :stories do
+        resources :comments
+      end
   end
-  
+  resources :columns
   root to: "boards#index"
 end

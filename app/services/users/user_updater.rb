@@ -1,4 +1,4 @@
-class Users::UpdateService
+class Users::UserUpdater
     def initialize(user, params)
       @user = user
       @params = params
