@@ -1,11 +1,21 @@
 module CommonHelper
-    def add_error(error)
+attr_reader :success
+
+    def add_error(message: , traceback: [])
       @errors ||= []
-      @errors << error
+      @errors << {message: message, traceback: traceback.as_json}
     end
     
-    def add_success(success)
-      @success ||= []
-      @success << success
+    def success=(resolve)
+    @success &&= resolve
     end
-  end
+
+    def add_success(success)
+    @success ||= []
+    @success << success
+    end
+
+    def success?
+        @success
+    end
+end

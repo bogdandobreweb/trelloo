@@ -1,18 +1,7 @@
-class Comments::CommentsCollector
-    include CommonHelper
-    attr_reader :errors
+class Comments::CommentCollector < BaseCollector
 
-    def initialize(story_id)
-      @story = Story.find(story_id)
-    end
-  
-    def call
-        @errors = []
-        @comments = @story.comments
-        add_success("Comments fetched successfully!")
-        @comments
-        rescue StandardError => e
-        add_error("Failed to fetch comments! Error: #{e.message}")
-        end
-    end
+  def model
+    Comment
+  end
+
 end

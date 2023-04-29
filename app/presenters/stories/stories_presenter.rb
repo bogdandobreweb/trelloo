@@ -1,19 +1,22 @@
 class Stories::StoriesPresenter
 include CommonHelper
 
-  def initialize(board_id)
-    @board = Board.find(board_id)
+  def initialize(board_id, story_presenter: Stories::StoryPresenter)
+    @board_id = board_id
+    @story_presenter = story_presenter
     @errors = []
   end
 
   def as_json(*)
-    stories_data = @board.stories.where(board_id: @board.id).includes(:column).map do |story|
-            Stories::StoryPresenter.new(story.id).as_json
+    stories_data = stories_skope.map do |story|
+            @story_presenter.new(story.id).as_json
             end
-    add_success("Story data is ready!")
-    { story: stories_data, errors: @errors}
+   
     rescue StandardError => e
-    add_error("Failed to present story data! Error: #{e.message}")
-    { errors: @errors }
+    add_error(message: "Failed to present story data!", traceback: "#{e.message}")
   end
+
+    def stories_skope
+    Story.where(board_id: @board_id).includes(:column)
+    end
 end

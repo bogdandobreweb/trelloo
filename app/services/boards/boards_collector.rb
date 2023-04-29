@@ -1,17 +1,7 @@
-class Boards::BoardsCollector
-  include CommonHelper
-  attr_reader :errors
+class Boards::BoardsCollector < BaseCollector
 
-  def initialize(current_user)
-    @current_user = current_user
+  def model
+    Board
   end
-  
-  def call
-    @errors = []
-    boards = @current_user.boards
-    add_success("Boards fetched successfully!")
-    boards
-  rescue StandardError => e
-    add_error("Failed to fetch boards! Error: #{e.message}")
-  end
-end
+
+end 

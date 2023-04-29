@@ -2,7 +2,7 @@ class Users::UsersPresenter
     def initialize(user)
       @user = user
     end
-  
+  # 
     def as_json(*)
       boards_data = @user.boards.includes(:stories).map do |board|
         {

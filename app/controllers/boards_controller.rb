@@ -3,14 +3,14 @@ class BoardsController < ApplicationController
     before_action :authenticate_user!
 
     def index
-        boards_collector = Boards::BoardsCollector.new(current_user)
+        boards_collector = Boards::BoardsCollector.new
         boards = boards_collector.call
       
-        if boards_collector.errors.empty?
+        # if boards.errors.empty?
           render json: Boards::BoardsPresenter.new(boards).as_json, status: :ok
-        else
-          render json: { errors: boards_collector.errors }, status: :bad_request
-        end
+        # else
+        #   render json: { errors: boards_collector.errors }, status: :bad_request
+        # end
       end
   
     def show
@@ -56,7 +56,7 @@ class BoardsController < ApplicationController
     end
   
     def board_params
-      params.require(:board).permit(:name)
+      params.require(:board).permit(policy(@board).permitted_attributes)
     end
 
   end

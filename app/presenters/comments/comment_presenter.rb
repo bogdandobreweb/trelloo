@@ -7,17 +7,12 @@ include CommonHelper
     end
   
     def as_json
-        comment_data = {
-          id: @comment.id,
-          body: @comment.body,
-          user_id: @comment.user_id,
-          story_id: @comment.story_id
-        }
+      comment_data = @comment.api_attributes
     
-        add_success("Comment data is ready!")
-        { comment: comment_data, errors: @errors}
+      comment_data
+
       rescue StandardError => e
-        add_error("Failed to present comment data! Error: #{e.message}")
+        add_error(message: "Failed to present comment data!", traceback: "#{e.message}")
         { errors: @errors }
       end
   end

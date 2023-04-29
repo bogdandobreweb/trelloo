@@ -5,21 +5,22 @@ class ColumnsController < ApplicationController
     def index
         columns_collector = Columns::ColumnsCollector.new
         columns = columns_collector.call
-
-        if columns_collector.errors.empty?
+        authorize columns
+        # if columns_collector.errors.empty?
             render json: Columns::ColumnsPresenter.new.as_json, status: :ok
-        else
-            render json: { errors: columns_collector.errors }, status: :bad_request
-        end
+        # else
+        #     render json: { errors: columns_collector.errors }, status: :bad_request
+        # end
     end
     
     def show
+        authorize @column
         render json: Columns::ColumnPresenter.new(set_column.id).as_json, status: :ok
     end
   
     def create
       column_creator = Columns::ColumnCreator.new(column_params).call
-  
+      authorize column_creator
       if column_creator.errors.empty?
         render json: Columns::ColumnPresenter.new(column_creator.id).as_json, status: :created
       else
@@ -29,7 +30,7 @@ class ColumnsController < ApplicationController
   
     def update
       column_updater = Columns::ColumnUpdater.new(@column.id, column_params).call
-  
+      authorize column_updater
       if column_updater.errors.empty?
         head :no_content
       else
@@ -39,7 +40,7 @@ class ColumnsController < ApplicationController
   
     def destroy
       column_destroyer = Columns::ColumnDestroyer.new(@column.id).call
-  
+      authorize column_destroyer
       if column_destroyer.errors.empty?
         head :no_content
       else
@@ -54,7 +55,7 @@ class ColumnsController < ApplicationController
     end
   
     def column_params
-      params.require(:column).permit(:name, :order_id)
+      params.require(:column).permit(policy(@column).permitted_attributes)
     end
   end
   
