@@ -1,6 +1,6 @@
 class StoryPolicy < ApplicationPolicy
   def index?
-    true
+   true
   end
 
   def show?
@@ -12,7 +12,7 @@ class StoryPolicy < ApplicationPolicy
   end
 
   def update?
-    admin? || manager? || (developer? && record.user_id == user.id && valid_column_id_change?)
+    admin? || manager? || (developer? && record.user_id == user.id && valid_order_id_change?)
   end
 
   def destroy?
@@ -57,9 +57,9 @@ class StoryPolicy < ApplicationPolicy
     user.roles.exists?(name: role_name)
   end
 
-  def valid_column_id_change?
-    if record.column_id.present?
-      return (record.column_id - column_id.to_i).abs == 1
+  def valid_order_id_change?
+    if record.order_id.present?
+      return (record.order_id - order_id.to_i).abs == 1
     end
     true
   end

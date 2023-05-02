@@ -9,7 +9,7 @@ include CommonHelper
 
   def as_json(*)
     stories_data = stories_skope.map do |story|
-            @story_presenter.new(story.id).as_json
+            @story_presenter.new(story.id, @board_id).as_json
             end
    
     rescue StandardError => e

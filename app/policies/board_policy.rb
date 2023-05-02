@@ -33,12 +33,6 @@ class BoardPolicy < ApplicationPolicy
     [:name]
   end
 
-  class Scope < Scope
-    def resolve
-      scope.all
-    end
-  end
-
   private
 
   def admin?
@@ -52,4 +46,11 @@ class BoardPolicy < ApplicationPolicy
   def has_role?(role_name)
     user.roles.exists?(name: role_name)
   end
+  
+  class Scope < Scope
+    def resolve
+      scope.all
+    end
+  end
+
 end

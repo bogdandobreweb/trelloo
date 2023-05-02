@@ -2,13 +2,15 @@ class StoriesController < ApplicationController
     before_action :authenticate_user!
 
     def index
-        render json: Stories::StoriesPresenter.new(params[:board_id]).as_json, status: :ok
+        board = Board.find(params[:board_id])
+        authorize board
+        render json: Stories::StoriesPresenter.new(board).as_json, status: :ok
     end
 
     def show
         story = set_story
         authorize story
-        render json: Stories::StoryPresenter.new(story.id).as_json, status: :ok
+        render json: Stories::StoryPresenter.new(story.id, params[:board_id]).as_json, status: :ok
     end
 
     def create

@@ -11,7 +11,7 @@ class BoardsController < ApplicationController
         # else
         #   render json: { errors: boards_collector.errors }, status: :bad_request
         # end
-      end
+    end
   
     def show
         render json: Boards::BoardPresenter.new(@board.id).as_json
@@ -25,7 +25,7 @@ class BoardsController < ApplicationController
         else
           render json: { errors: board.errors }, status: :unprocessable_entity
         end
-      end
+    end
   
     def update
         board = Boards::BoardUpdater.new(@board.id, board_params).call
@@ -46,7 +46,7 @@ class BoardsController < ApplicationController
         else
           render json: { errors: result.errors }, status: :unprocessable_entity
         end
-      end
+    end
       
   
     private
