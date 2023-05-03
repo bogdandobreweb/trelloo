@@ -24,6 +24,8 @@ class ColumnPolicy < ApplicationPolicy
       [:id, :name, :order_id]
     elsif manager?
       [:id, :name]
+    elsif developer?
+      [:id]
     else
       []
     end
@@ -42,14 +44,15 @@ class ColumnPolicy < ApplicationPolicy
   private
 
   def admin?
-    has_role?("admin")
+    user.has_role?("admin")
   end
 
   def manager?
-    has_role?("manager")
+    user.has_role?("manager")
+  end
+  
+  def developer?
+    user.has_role?("developer")
   end
 
-  def has_role?(role_name)
-    user.roles.exists?(name: role_name)
-  end
 end

@@ -1,4 +1,5 @@
 require 'simplecov'
+require '../spec/rails_helper.rb'
 SimpleCov.start
 
 RSpec.configure do |config|

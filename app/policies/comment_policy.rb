@@ -1,4 +1,5 @@
 class CommentPolicy < ApplicationPolicy
+  
   def index?
     true
   end
@@ -23,7 +24,7 @@ class CommentPolicy < ApplicationPolicy
     if admin?
       [:id, :body, :story_id]
     elsif manager?
-      [:id, :body]
+      [:body]
     else
       []
     end

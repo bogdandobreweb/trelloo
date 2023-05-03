@@ -3,14 +3,9 @@ class BoardsController < ApplicationController
     before_action :authenticate_user!
 
     def index
-        boards_collector = Boards::BoardsCollector.new
+        boards_collector = Boards::BoardsCollector.new(base_filter_service: Boards::BoardsFilter.new)
         boards = boards_collector.call
-      
-        # if boards.errors.empty?
           render json: Boards::BoardsPresenter.new(boards).as_json, status: :ok
-        # else
-        #   render json: { errors: boards_collector.errors }, status: :bad_request
-        # end
     end
   
     def show

@@ -11,8 +11,13 @@ class CommonBase
   end
 
   def model
-    classname.demodulize.underscore.split('_').first
- end
+    klass = if self.is_a?(Class)
+              self
+            else
+              self.class
+            end
+    klass.name.demodulize.underscore.split('_').first.singularize.capitalize.constantize
+  end
   
   def call
     raise "Must be implemented in inheriting class"

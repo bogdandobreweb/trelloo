@@ -3,7 +3,7 @@ class ColumnsController < ApplicationController
     before_action :authenticate_user!
   
     def index
-        columns_collector = Columns::ColumnsCollector.new
+        columns_collector = Columns::ColumnsCollector.new(base_filter_service: Columns::ColumnsFilter.new)
         columns = columns_collector.call
         authorize columns
         # if columns_collector.errors.empty?

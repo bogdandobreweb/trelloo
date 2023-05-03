@@ -13,5 +13,6 @@
     else
       add_error(message: "#{model.name} not found!", traceback: [])  
     end
+  end
   
 end

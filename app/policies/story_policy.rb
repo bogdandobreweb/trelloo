@@ -1,10 +1,10 @@
 class StoryPolicy < ApplicationPolicy
   def index?
-   true
+    view_stories? || user.admin?
   end
 
   def show?
-    true
+    view_story? 
   end
 
   def create?
@@ -39,22 +39,24 @@ class StoryPolicy < ApplicationPolicy
     end
   end
 
-  private
-
   def admin?
-    has_role?("admin")
+    user.has_role?("admin")
   end
 
   def manager?
-    has_role?("manager")
+    user.has_role?("manager")
   end
 
   def developer?
-    has_role?("developer")
+    user.has_role?("developer")
+  end
+  
+  def view_stories?
+    user.has_role?("admin") || user.has_board_subscription?(record.board_id)
   end
 
-  def has_role?(role_name)
-    user.roles.exists?(name: role_name)
+  def view_story?
+    user.has_role?("admin") || user.has_board_subscription?(record.board_id) 
   end
 
   def valid_order_id_change?

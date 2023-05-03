@@ -1,10 +1,10 @@
 class BoardPolicy < ApplicationPolicy
-  def index?
-    true
+  def show?
+    view_stories?
   end
 
-  def show?
-    true
+  def index?
+    view_stories?
   end
 
   def create?
@@ -43,10 +43,16 @@ class BoardPolicy < ApplicationPolicy
     has_role?("manager")
   end
 
+  def view_stories?
+    has_role?("admin") || user.board_subscriptions.exists?(board_id: record.id)
+  end
+
   def has_role?(role_name)
     user.roles.exists?(name: role_name)
   end
-  
+
+  public :view_stories?
+
   class Scope < Scope
     def resolve
       scope.all

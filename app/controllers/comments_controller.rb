@@ -1,5 +1,7 @@
 class CommentsController < ApplicationController
     before_action :authenticate_user!
+    before_action :set_comment, only: [:show, :update, :destroy]
+    before_action :set_story, only: [:index, :create]
 
     def index
         story = Story.find_by(id: params[:story_id])
@@ -21,11 +23,10 @@ class CommentsController < ApplicationController
       end
 
     def create
-        creator = Comments::CommentCreator.new
-        comment = creator.call(comment_params.merge(user_id: current_user.id))
-        authorize comment
-        render json: Stories::StoryPresenter.new(params[:story_id]).as_json, status: :ok
-      end
+        @creator = Comments::CommentCreator.new
+        comment = @creator.call(comment_params_for_create.merge(user_id: current_user.id, story_id: params[:story_id]))
+        render json: Stories::StoryPresenter.new(params[:story_id], set_story.board_id).as_json, status: :ok
+    end
     
     def update
         @comment = Comment.find(params[:id])
@@ -41,7 +42,6 @@ class CommentsController < ApplicationController
     def destroy
         comment_destroyer = Comments::CommentDestroyer.new
         comment = comment_destroyer.call(set_comment.id)
-        authorize comment
         if comment.nil?
             render json: "Comment deleted" , status: :ok
         elsif comment.errors.exists?
@@ -55,8 +55,15 @@ class CommentsController < ApplicationController
     def set_comment
         @comment = Comment.find(params[:id])
     end
-
+    
+    def set_story
+        @story = Story.find(params[:story_id])
+    end
+   
     def comment_params
         params.require(:comment).permit(policy(@comment).permitted_attributes)
     end
+    def comment_params_for_create
+        params.require(:comment).permit(policy(Comment).permitted_attributes_for_create)
+    end 
 end

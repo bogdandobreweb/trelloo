@@ -1,10 +1,12 @@
 class StoriesController < ApplicationController
     before_action :authenticate_user!
+    #before_actions -> 
 
     def index
-        board = Board.find(params[:board_id])
-        authorize board
-        render json: Stories::StoriesPresenter.new(board).as_json, status: :ok
+        @board = Board.find(params[:board_id])
+        stories = Stories::StoryCollector.new(base_filter_service: Stories::StoriesFilter.new).call
+        authorize stories
+        render json: Stories::StoriesPresenter.new(@board.id).as_json, status: :ok
     end
 
     def show
@@ -14,8 +16,7 @@ class StoriesController < ApplicationController
     end
 
     def create
-        @story = Story.find(params[:id])
-        authorize @story
+        authorize current_user
         story_creator = Stories::StoryCreator.new.call(story_params)
         story = story_creator.record
         if story.errors.empty?

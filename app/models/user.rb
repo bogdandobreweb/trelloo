@@ -10,4 +10,12 @@ class User < ApplicationRecord
   has_many :stories
   has_many :comments
 
+  def has_board_subscription?(board_id)
+    board_subscriptions.exists?(board_id: board_id)
+  end
+
+  def has_role?(role_name)
+    roles.exists?(name: role_name)
+  end
+
 end

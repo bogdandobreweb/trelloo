@@ -2,13 +2,17 @@ class BaseCollector < CommonBase
 
   attr_reader :records
 
-  def call
-    @records = model.all
+  def initialize(base_filter_service: BaseFilter.new)
+    @base_filter_service = base_filter_service
+  end
+
+  def call(options: {})
+    @records = @base_filter_service.call(options: options)
     success = @records.present? 
     
     return @records if success
     
-    add_error(message: "Failed to update in #{self.class.name}!", traceback: @records.errors)
+    add_error(message: "Failed to collect !", traceback: @records.errors)
   end
 
 end
