@@ -1,19 +1,18 @@
-require '../rails_helper.rb'
-require '../../app/services/boards/boards_collector.rb'
+require 'rails_helper'
+# require '../../app/services/boards/boards_collector.rb'
 
 RSpec.describe CommonBase do
   let(:board_collector) { Boards::BoardsCollector.new }
   describe '.model' do
-    context 'when called on a class' do
+    context 'when called on a class with an explicit model method' do
       it 'returns the model of that class' do
         expect(board_collector.model).to eq(Board) 
       end
     end
-
-    context 'when called on an object' do
-      it 'returns the model of the object class' do
-        instance = board_collector
-        expect(instance.model).to eq(Board) 
+  
+    context 'when called on a class that inherits from CommonBase' do
+      it 'returns the class itself' do
+        expect(Boards::BoardsCollector.new.model).to eq(Board)
       end
     end
   end

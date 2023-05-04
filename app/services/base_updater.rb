@@ -18,6 +18,8 @@ class BaseUpdater < CommonBase
     return @record if success
     
     add_error(message: "Failed to update in #{self.class.name}!", traceback: @record.errors)
+  
+    return nil
   end
 
 end

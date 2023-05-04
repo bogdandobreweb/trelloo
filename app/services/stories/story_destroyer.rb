@@ -1,4 +1,4 @@
-class Columns::ColumnDestroyer < BaseDestroyer
-    
+class Stories::StoryDestroyer < BaseDestroyer
+
 end
   

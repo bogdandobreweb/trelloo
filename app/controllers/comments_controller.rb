@@ -24,6 +24,7 @@ class CommentsController < ApplicationController
 
     def create
         @creator = Comments::CommentCreator.new
+        authorize @creator
         comment = @creator.call(comment_params_for_create.merge(user_id: current_user.id, story_id: params[:story_id]))
         render json: Stories::StoryPresenter.new(params[:story_id], set_story.board_id).as_json, status: :ok
     end

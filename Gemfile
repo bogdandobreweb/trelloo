@@ -80,9 +80,9 @@ gem "pundit", "~> 2.3"
 
 gem "sidekiq", "~> 7.0"
 
-gem "simplecov", "~> 0.22.0"
-
 gem "bcrypt", "~> 3.1"
 
 gem "devise", "~> 4.9"
 
+
+gem "simplecov", "~> 0.22.0"

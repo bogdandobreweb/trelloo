@@ -1,10 +1,13 @@
-require '../rails_helper.rb'
-require '../../app/services/boards/boards_collector.rb'
-require '../../app/services/boards/boards_filter.rb'
-
+require 'rails_helper'
+# require '../../app/services/boards/boards_collector.rb'
+# require '../../app/services/boards/boards_filter.rb'
 
 RSpec.describe BaseCollector do
-  let(:boards) { [Board.create(name: "Test Board 1"), Board.create(name: "Test Board 2")] }
+  before do 
+    Board.create(name: "Test Board 1")
+    Board.create(name: "Test Board 2")
+  end
+  let(:boards) { Board.all }
 
   let(:board_collector) { Boards::BoardsCollector.new(base_filter_service: Boards::BoardsFilter.new)}
 
@@ -18,8 +21,7 @@ RSpec.describe BaseCollector do
     context 'when records are not present' do
       it 'adds an error to the collector' do
         allow(board_collector.model).to receive(:all).and_return([])
-        board_collector.call
-        expect(board_collector.errors).to include(message: "Failed to collect !", traceback: nil)
+        expect(board_collector.call).to eq([message: "Failed to collect !", traceback: []])
       end
     end
   end
@@ -33,7 +35,7 @@ RSpec.describe BaseCollector do
 
     context 'when called on a class' do
       it 'returns the model of that class' do
-        expect(Boards::BoardsCollector.new.model).to eq(Object)
+        expect(Boards::BoardsCollector.new.model).to eq(Board)
       end
     end
   end

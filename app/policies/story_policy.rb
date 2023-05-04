@@ -12,7 +12,7 @@ class StoryPolicy < ApplicationPolicy
   end
 
   def update?
-    admin? || manager? || (developer? && record.user_id == user.id && valid_order_id_change?)
+    admin? || manager? || (developer? && record.user_id == user.id )
   end
 
   def destroy?
@@ -30,7 +30,7 @@ class StoryPolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_create
-    [:name, :description, :column_id, :board_id]
+    [:name, :description, :column_id]
   end
 
   class Scope < Scope
@@ -59,10 +59,4 @@ class StoryPolicy < ApplicationPolicy
     user.has_role?("admin") || user.has_board_subscription?(record.board_id) 
   end
 
-  def valid_order_id_change?
-    if record.order_id.present?
-      return (record.order_id - order_id.to_i).abs == 1
-    end
-    true
-  end
 end

@@ -12,7 +12,7 @@ class BaseCollector < CommonBase
     
     return @records if success
     
-    add_error(message: "Failed to collect !", traceback: @records.errors)
+    add_error(message: "Failed to collect !")
   end
 
 end

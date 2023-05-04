@@ -1,13 +1,11 @@
 class CommonBase
   include CommonHelper
-  include PrerequisitesHelper
+  include ErrorsHelper
   
-
   def self.call(*args)
     obj = new(*args)
     obj.needed_before_call
     obj.call
-    obj.needed_after_call
   end
 
   def model
@@ -24,7 +22,7 @@ class CommonBase
   end
 
   def needed_before_call
-    prerequisites
+    init_errors
   end
 
   def needed_after_call
