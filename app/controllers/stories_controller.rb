@@ -1,6 +1,6 @@
 class StoriesController < ApplicationController
     before_action :authenticate_user!
-    before_action :check_valid_column_id_change, only: [:update]
+    # before_action :check_valid_column_id_change, only: [:update]
 
     def index
         @board = Board.find(params[:board_id])
@@ -28,14 +28,15 @@ class StoriesController < ApplicationController
 
     def update
         @story = Story.find(params[:id])
-        @story = Stories::StoryUpdater.new.call(story_params)
         authorize @story
-        if @story.errors.empty?
-          render json: Stories::StoryPresenter.new(@story.id, params[:board_id]).as_json, status: :ok
+        if @story.update(story_params)
+          updated_story = Stories::StoryUpdater.new.call(story_params)
+          deployed_story = Stories::StoryUpdater.new.check_update_story(updated_story)
+          render json: deployed_story, status: :ok
         else
-          render json: story.errors, status: :unprocessable_entity
+          render json: { errors: @story.errors }, status: :unprocessable_entity
         end
-      end
+    end
 
     def destroy
         story_destroyer = Stories::StoryDestroyer.new

@@ -84,5 +84,6 @@ gem "bcrypt", "~> 3.1"
 
 gem "devise", "~> 4.9"
 
+gem 'rswag'
 
 gem "simplecov", "~> 0.22.0"

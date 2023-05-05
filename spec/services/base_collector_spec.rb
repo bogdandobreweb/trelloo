@@ -1,6 +1,4 @@
 require 'rails_helper'
-# require '../../app/services/boards/boards_collector.rb'
-# require '../../app/services/boards/boards_filter.rb'
 
 RSpec.describe BaseCollector do
   before do 

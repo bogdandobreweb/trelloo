@@ -8,10 +8,10 @@ class BaseUpdater < CommonBase
       return
     end
 
-    @record = model.find(attrs[:id])
+    @record = model.find_by(id: attrs[:id])
     if @record.blank?
       add_error(message: "#{model.name} not found!")  
-      return
+      return nil
     end
 
     success = @record.update(attrs)

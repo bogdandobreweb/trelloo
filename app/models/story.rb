@@ -4,12 +4,17 @@ class Story < ApplicationRecord
   belongs_to :board
   has_many :comments, dependent: :destroy
 
+  DEPLOYED_COLUMN = 4
+
   def api_attributes
     {
       id: id,
       name: name,
       description: description,
-      column: column.name
+      column: column.name,
+      side_status: side_status,
+      user_id: user_id,
+      delivered_at: delivered_at
     }
   end
 

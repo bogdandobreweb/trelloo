@@ -1,6 +1,6 @@
 class BoardPolicy < ApplicationPolicy
   def show?
-    view_stories?
+    true
   end
 
   def index?
@@ -44,11 +44,11 @@ class BoardPolicy < ApplicationPolicy
   end
 
   def view_stories?
-    has_role?("admin") || user.board_subscriptions.exists?(board_id: record.id)
+    has_role?("admin") || has_role?("manager") || has_role?("developer") || user.board_subscriptions.exists?(board_id: record.id)
   end
 
   def has_role?(role_name)
-    user.roles.exists?(name: role_name)
+    user.roles.any? { |role| role.name == role_name }
   end
 
   public :view_stories?

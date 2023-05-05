@@ -6,6 +6,7 @@ class CommonBase
     obj = new(*args)
     obj.needed_before_call
     obj.call
+    obj.needed_after_call
   end
 
   def model

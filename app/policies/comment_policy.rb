@@ -9,7 +9,7 @@ class CommentPolicy < ApplicationPolicy
   end
 
   def create?
-    admin? || manager?
+    admin? || manager? || developer?
   end
 
   def update?

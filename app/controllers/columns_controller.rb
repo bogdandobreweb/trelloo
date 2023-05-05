@@ -6,11 +6,7 @@ class ColumnsController < ApplicationController
         columns_collector = Columns::ColumnsCollector.new(base_filter_service: Columns::ColumnsFilter.new)
         columns = columns_collector.call
         authorize columns
-        # if columns_collector.errors.empty?
             render json: Columns::ColumnsPresenter.new.as_json, status: :ok
-        # else
-        #     render json: { errors: columns_collector.errors }, status: :bad_request
-        # end
     end
     
     def show

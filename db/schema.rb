@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_26_143519) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_05_085734) do
   create_table "access_controls", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "role_id", null: false
     t.bigint "action_id", null: false
@@ -77,6 +77,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_26_143519) do
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.bigint "board_id", null: false
+    t.string "side_status", default: "Pending"
+    t.datetime "delivered_at"
     t.index ["board_id"], name: "index_stories_on_board_id"
     t.index ["column_id"], name: "index_stories_on_column_id"
     t.index ["user_id"], name: "index_stories_on_user_id"
