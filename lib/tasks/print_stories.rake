@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :stories do
   desc 'Print all stories'
   task print_all: :environment do

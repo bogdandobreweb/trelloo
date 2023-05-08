@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ColumnPolicy < ApplicationPolicy
   def index?
     true
@@ -23,7 +25,7 @@ class ColumnPolicy < ApplicationPolicy
     if admin?
       %i[id name order_id]
     elsif manager?
-      %i[id name]
+      %i[id name order_id]
     elsif developer?
       [:id]
     else
@@ -53,5 +55,9 @@ class ColumnPolicy < ApplicationPolicy
 
   def developer?
     user.has_role?('developer')
+  end
+  
+  def has_role?(role_name)
+    user.roles.any? { |role| role.name == role_name }
   end
 end

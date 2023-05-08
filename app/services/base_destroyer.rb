@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BaseDestroyer < CommonBase
   attr_reader :record
 

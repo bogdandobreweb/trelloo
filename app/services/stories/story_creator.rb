@@ -1,2 +1,6 @@
-class Stories::StoryCreator < BaseCreator
+# frozen_string_literal: true
+
+module Stories
+  class StoryCreator < BaseCreator
+  end
 end

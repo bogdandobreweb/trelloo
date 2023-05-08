@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 class StoriesController < ApplicationController
   before_action :authenticate_user!
-  # before_action :check_valid_column_id_change, only: [:update]
 
   def index
     @board = Board.find(params[:board_id])

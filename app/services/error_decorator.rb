@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ErrorDecorator
   def initialize(obj)
     @obj = obj

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class StoryPolicy < ApplicationPolicy
   def index?
     view_stories? || user.admin?

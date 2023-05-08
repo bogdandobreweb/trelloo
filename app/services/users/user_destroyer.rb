@@ -1,9 +1,13 @@
-class Users::UserDestroyer
-  def initialize(user)
-    @user = user
-  end
+# frozen_string_literal: true
 
-  def call
-    @user.destroy
+module Users
+  class UserDestroyer
+    def initialize(user)
+      @user = user
+    end
+
+    def call
+      @user.destroy
+    end
   end
 end

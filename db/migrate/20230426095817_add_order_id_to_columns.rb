@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddOrderIdToColumns < ActiveRecord::Migration[7.0]
   def change
     add_column :columns, :order_id, :integer, null: false, unique: true

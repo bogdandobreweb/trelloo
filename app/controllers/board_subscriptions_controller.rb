@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BoardSubscriptionsController < ApplicationController
   before_action :authenticate_user!, :authorize_admin!
 
@@ -34,7 +36,7 @@ class BoardSubscriptionsController < ApplicationController
   end
 
   def authorize_admin!
-    return if current_user && current_user.admin?
+    return if current_user&.admin?
 
     render json: { errors: ['You do not have permission to perform this action.'] }, status: :forbidden
   end

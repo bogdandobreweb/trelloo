@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BoardSubscriptionPolicy < ApplicationPolicy
   def admin?
     user.admin?

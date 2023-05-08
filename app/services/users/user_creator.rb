@@ -1,13 +1,17 @@
-class Users::UserCreator
-  include CommonHelper
+# frozen_string_literal: true
 
-  def initialize(params)
-    @params = params
-    @errors = []
-    @successes = []
-  end
+module Users
+  class UserCreator
+    include CommonHelper
 
-  def call
-    User.create(@params)
+    def initialize(params)
+      @params = params
+      @errors = []
+      @successes = []
+    end
+
+    def call
+      User.create(@params)
+    end
   end
 end

@@ -1,15 +1,19 @@
-class Comments::CommentPresenter
-  include CommonHelper
+# frozen_string_literal: true
 
-  def initialize(comment_id)
-    @comment = Comment.find(comment_id)
-    @errors = []
-  end
+module Comments
+  class CommentPresenter
+    include CommonHelper
 
-  def as_json
-    @comment.api_attributes
-  rescue StandardError => e
-    add_error(message: 'Failed to present comment data!', traceback: "#{e.message}")
-    { errors: @errors }
+    def initialize(comment_id)
+      @comment = Comment.find(comment_id)
+      @errors = []
+    end
+
+    def as_json
+      @comment.api_attributes
+    rescue StandardError => e
+      add_error(message: 'Failed to present comment data!', traceback: e.message.to_s)
+      { errors: @errors }
+    end
   end
 end

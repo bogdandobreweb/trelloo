@@ -1,12 +1,16 @@
-class Columns::ColumnsPresenter
-  include CommonHelper
+# frozen_string_literal: true
 
-  def initialize
-    @columns = Column.all
-    @errors = []
-  end
+module Columns
+  class ColumnsPresenter
+    include CommonHelper
 
-  def as_json(*)
-    @columns.map { |column| Columns::ColumnPresenter.new(column.id).as_json }
+    def initialize
+      @columns = Column.all
+      @errors = []
+    end
+
+    def as_json(*)
+      @columns.map { |column| Columns::ColumnPresenter.new(column.id).as_json }
+    end
   end
 end

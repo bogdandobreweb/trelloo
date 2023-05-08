@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BaseCreator < CommonBase
   attr_reader :record
 

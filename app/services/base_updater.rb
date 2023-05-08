@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class BaseUpdater < CommonBase
   attr_reader :record
 

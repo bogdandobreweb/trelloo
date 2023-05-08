@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CommonBase
   include CommonHelper
   include ErrorsHelper

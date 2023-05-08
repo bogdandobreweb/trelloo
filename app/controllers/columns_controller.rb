@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ColumnsController < ApplicationController
   before_action :set_column, only: %i[show update destroy]
   before_action :authenticate_user!

@@ -1,13 +1,17 @@
-class Boards::BoardsPresenter
-  include CommonHelper
+# frozen_string_literal: true
 
-  def initialize(boards)
-    raise 'Board not present' unless boards.present?
+module Boards
+  class BoardsPresenter
+    include CommonHelper
 
-    @boards = boards
-  end
+    def initialize(boards)
+      raise 'Board not present' unless boards.present?
 
-  def as_json(*)
-    @boards.map { |board| Boards::BoardPresenter.new(board.id).as_json }
+      @boards = boards
+    end
+
+    def as_json(*)
+      @boards.map { |board| Boards::BoardPresenter.new(board.id).as_json }
+    end
   end
 end

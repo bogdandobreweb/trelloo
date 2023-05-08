@@ -1,10 +1,14 @@
-class Columns::ColumnsFilter < BaseFilter
-  def call(options: {})
-    return model.all if options.blank?
+# frozen_string_literal: true
 
-    result = model
-    result = result.where(name: options.name) if options.name.present?
+module Columns
+  class ColumnsFilter < BaseFilter
+    def call(options: {})
+      return model.all if options.blank?
 
-    result
+      result = model
+      result = result.where(name: options.name) if options.name.present?
+
+      result
+    end
   end
 end
