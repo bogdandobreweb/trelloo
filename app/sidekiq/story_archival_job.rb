@@ -1,11 +1,11 @@
 class StoryArchivalJob
   include Sidekiq::Job
 
-  def perform(*args)
+  def perform(*_args)
     stories = Story.where.not(delivered_at: nil)
 
     stories.each do |story|
-        story.update(side_status: "Archived")
+      story.update(side_status: 'Archived')
     end
   end
 end

@@ -1,3 +1,2 @@
 class Boards::BoardsCollector < BaseCollector
-
-end 
+end

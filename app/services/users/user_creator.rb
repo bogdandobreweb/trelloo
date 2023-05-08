@@ -1,14 +1,13 @@
 class Users::UserCreator
-include CommonHelper
+  include CommonHelper
 
-    def initialize(params)
-      @params = params
-      @errors = []
-      @successes = []
-    end
-  
-    def call
-      User.create(@params)
-      
-    end
+  def initialize(params)
+    @params = params
+    @errors = []
+    @successes = []
+  end
+
+  def call
+    User.create(@params)
+  end
 end

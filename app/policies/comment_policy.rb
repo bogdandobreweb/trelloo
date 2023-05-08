@@ -1,5 +1,4 @@
 class CommentPolicy < ApplicationPolicy
-  
   def index?
     true
   end
@@ -22,7 +21,7 @@ class CommentPolicy < ApplicationPolicy
 
   def permitted_attributes
     if admin?
-      [:id, :body, :story_id]
+      %i[id body story_id]
     elsif manager?
       [:body]
     else
@@ -31,7 +30,7 @@ class CommentPolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_create
-    [:body, :story_id]
+    %i[body story_id]
   end
 
   class Scope < Scope
@@ -43,15 +42,15 @@ class CommentPolicy < ApplicationPolicy
   private
 
   def admin?
-    has_role?("admin")
+    has_role?('admin')
   end
 
   def manager?
-    has_role?("manager")
+    has_role?('manager')
   end
 
   def developer?
-    has_role?("developer")
+    has_role?('developer')
   end
 
   def has_role?(role_name)

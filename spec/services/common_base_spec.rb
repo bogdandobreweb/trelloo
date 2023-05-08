@@ -6,10 +6,10 @@ RSpec.describe CommonBase do
   describe '.model' do
     context 'when called on a class with an explicit model method' do
       it 'returns the model of that class' do
-        expect(board_collector.model).to eq(Board) 
+        expect(board_collector.model).to eq(Board)
       end
     end
-  
+
     context 'when called on a class that inherits from CommonBase' do
       it 'returns the class itself' do
         expect(Boards::BoardsCollector.new.model).to eq(Board)
@@ -18,9 +18,9 @@ RSpec.describe CommonBase do
   end
 
   describe '.call' do
-      it 'raises an error' do
-        expect { described_class.call }.to raise_error(RuntimeError, 'Must be implemented in inheriting class')
-      end
+    it 'raises an error' do
+      expect { described_class.call }.to raise_error(RuntimeError, 'Must be implemented in inheriting class')
+    end
   end
 
   describe '.needed_before_call' do
@@ -38,4 +38,3 @@ RSpec.describe CommonBase do
     end
   end
 end
-

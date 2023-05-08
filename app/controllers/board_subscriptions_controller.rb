@@ -23,7 +23,6 @@ class BoardSubscriptionsController < ApplicationController
     end
   end
 
-
   private
 
   def set_board_subscription
@@ -35,8 +34,8 @@ class BoardSubscriptionsController < ApplicationController
   end
 
   def authorize_admin!
-    unless current_user && current_user.admin?
-      render json: { errors: ["You do not have permission to perform this action."] }, status: :forbidden
-    end
+    return if current_user && current_user.admin?
+
+    render json: { errors: ['You do not have permission to perform this action.'] }, status: :forbidden
   end
 end

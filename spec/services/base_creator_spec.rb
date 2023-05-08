@@ -13,7 +13,7 @@ RSpec.describe BaseCreator do
     end
 
     context 'when record creation fails' do
-      let(:attrs) {  }
+      let(:attrs) {}
       it 'adds an error to the creator' do
         expect(board_creator.call(attrs)).to eq(nil)
       end

@@ -21,9 +21,9 @@ class ColumnPolicy < ApplicationPolicy
 
   def permitted_attributes
     if admin?
-      [:id, :name, :order_id]
+      %i[id name order_id]
     elsif manager?
-      [:id, :name]
+      %i[id name]
     elsif developer?
       [:id]
     else
@@ -32,7 +32,7 @@ class ColumnPolicy < ApplicationPolicy
   end
 
   def permitted_attributes_for_create
-    [:name, :order_id]
+    %i[name order_id]
   end
 
   class Scope < Scope
@@ -44,15 +44,14 @@ class ColumnPolicy < ApplicationPolicy
   private
 
   def admin?
-    user.has_role?("admin")
+    user.has_role?('admin')
   end
 
   def manager?
-    user.has_role?("manager")
-  end
-  
-  def developer?
-    user.has_role?("developer")
+    user.has_role?('manager')
   end
 
+  def developer?
+    user.has_role?('developer')
+  end
 end

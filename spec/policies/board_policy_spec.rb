@@ -18,8 +18,6 @@ RSpec.describe BoardPolicy do
     user1.roles << admin_role
     user2.roles << manager_role
     user3.roles << developer_role
-    print user1.id
-    print user1.roles.first.name
   end
 
   permissions :index?, :show? do

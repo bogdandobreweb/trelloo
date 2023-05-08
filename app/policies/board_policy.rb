@@ -21,7 +21,7 @@ class BoardPolicy < ApplicationPolicy
 
   def permitted_attributes
     if admin?
-      [:id, :name]
+      %i[id name]
     elsif manager?
       [:name]
     else
@@ -36,15 +36,15 @@ class BoardPolicy < ApplicationPolicy
   private
 
   def admin?
-    has_role?("admin")
+    has_role?('admin')
   end
 
   def manager?
-    has_role?("manager")
+    has_role?('manager')
   end
 
   def view_stories?
-    has_role?("admin") || has_role?("manager") || has_role?("developer") || user.board_subscriptions.exists?(board_id: record.id)
+    has_role?('admin') || has_role?('manager') || has_role?('developer') || user.board_subscriptions.exists?(board_id: record.id)
   end
 
   def has_role?(role_name)
@@ -58,5 +58,4 @@ class BoardPolicy < ApplicationPolicy
       scope.all
     end
   end
-
 end

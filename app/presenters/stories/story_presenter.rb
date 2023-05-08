@@ -1,5 +1,5 @@
 class Stories::StoryPresenter
-include CommonHelper
+  include CommonHelper
 
   def initialize(story_id, board_id, comment_presenter: Comments::CommentPresenter)
     @story = Board.find(board_id).stories.find(story_id)
@@ -8,12 +8,11 @@ include CommonHelper
   end
 
   def as_json
-
     story_data = @story.api_attributes
     story_data[:comments] = @story.comments.map { |comment| @comment_presenter.new(comment.id).as_json }
 
     story_data
-    rescue StandardError => e
-    add_error(message: "Failed to present story data!", traceback: "#{e.message}")
+  rescue StandardError => e
+    add_error(message: 'Failed to present story data!', traceback: "#{e.message}")
   end
 end

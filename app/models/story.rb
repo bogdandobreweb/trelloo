@@ -8,25 +8,24 @@ class Story < ApplicationRecord
 
   def api_attributes
     {
-      id: id,
-      name: name,
-      description: description,
+      id:,
+      name:,
+      description:,
       column: column.name,
-      side_status: side_status,
-      user_id: user_id,
-      delivered_at: delivered_at
+      side_status:,
+      user_id:,
+      delivered_at:
     }
   end
 
   def valid_column_id_change?(column_id)
-    if self.column_id.present?
-      old_column_id = self.column_id
-      new_column_id = column_id.to_i
-      
-      unless (new_column_id - old_column_id).abs == 1
-        return false
-      end
-      true
-    end
+    return unless self.column_id.present?
+
+    old_column_id = self.column_id
+    new_column_id = column_id.to_i
+
+    return false unless (new_column_id - old_column_id).abs == 1
+
+    true
   end
 end

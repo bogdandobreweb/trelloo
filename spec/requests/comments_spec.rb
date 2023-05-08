@@ -11,7 +11,7 @@ describe 'Comments API' do
         properties: {
           body: { type: :string }
         },
-        required: [ 'body' ]
+        required: ['body']
       }
 
       response '201', 'comment created' do

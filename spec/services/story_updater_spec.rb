@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Stories::StoryUpdater do
-  let(:board) { Board.create(name: "Board Name")}
-  let(:story) { Story.create(name: "Story Name", description: "dadada", column_id: 1, board_id: board.id)}
-  let(:attrs) { {id: story.id, name: 'New Story Name'} }
+  let(:board) { Board.create(name: 'Board Name') }
+  let(:story) { Story.create(name: 'Story Name', description: 'dadada', column_id: 1, board_id: board.id) }
+  let(:attrs) { { id: story.id, name: 'New Story Name' } }
   let(:story_updater) { Stories::StoryUpdater.new }
 
   describe '.call' do
@@ -22,8 +22,8 @@ RSpec.describe Stories::StoryUpdater do
     end
 
     context 'when update attributes are missing' do
-      let(:attrs) { }
-      
+      let(:attrs) {}
+
       it 'adds an error to the updater' do
         expect(story_updater.call(attrs)).to eq(nil)
         expect(story_updater.errors).not_to be_empty

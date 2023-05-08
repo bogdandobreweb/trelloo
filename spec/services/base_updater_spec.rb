@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe BaseUpdater do
-  let(:board) { Board.create(name: "Andrei")}
+  let(:board) { Board.create(name: 'Andrei') }
   let(:attrs) { { id: board.id, name: 'New Board Name' } }
   let(:board_updater) { Boards::BoardUpdater.new }
 
@@ -21,8 +21,8 @@ RSpec.describe BaseUpdater do
     end
 
     context 'when update attributes are missing' do
-      let(:attrs) { }
-      
+      let(:attrs) {}
+
       it 'adds an error to the updater' do
         expect(board_updater.call(attrs)).to eq(nil)
       end
