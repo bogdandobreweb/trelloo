@@ -50,7 +50,7 @@ class BoardPolicy < ApplicationPolicy
   end
 
   def has_role?(role_name)
-    user.roles.any? { |role| role.name == role_name }
+    user.roles.exists? { |role| role.name == role_name }
   end
 
   public :view_stories?

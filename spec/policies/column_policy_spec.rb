@@ -4,12 +4,12 @@ require 'rails_helper'
 
 RSpec.describe ColumnPolicy do
   subject { described_class }
-  let(:user1) { User.create(id: 1) }
-  let(:user2) { User.create(id: 2) }
-  let(:user3) { User.create(id: 3) }
   let(:admin_role) { Role.create(name: 'admin') }
   let(:manager_role) { Role.create(name: 'manager') }
   let(:developer_role) { Role.create(name: 'developer') }
+  let(:user1) { User.create(id: 1, role_id: admin_role.id) }
+  let(:user2) { User.create(id: 2, role_id: manager_role.id) }
+  let(:user3) { User.create(id: 3, role_id: developer_role.id) }
   let(:column) { Column.create(name: 'Column', order_id: 4) }
 
   before do

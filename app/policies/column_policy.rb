@@ -56,7 +56,7 @@ class ColumnPolicy < ApplicationPolicy
   def developer?
     user.has_role?('developer')
   end
-  
+
   def has_role?(role_name)
     user.roles.any? { |role| role.name == role_name }
   end
