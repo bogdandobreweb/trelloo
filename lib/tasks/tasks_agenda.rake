@@ -1,15 +1,24 @@
 # frozen_string_literal: true
 
-# Excludem toate delivered (side_status) si schimbam din find_each pentru a fi mai eficient
-
-# Tasks ( pluck(:id, :name) )
-
 namespace :stories do
   task tasks_agenda: :environment do
-    Story.where(side_status: "Pending").select(:id, :name).find_in_batches do |group|
-      group.each do |story|
-        puts "Story ##{story.id}: #{story.name}"
-      end
+    skope = Story.
+      where(side_status: "Pending").
+      select(:id, :name)
+
+    print skope.to_sql
+    skope.find_each do |story|
+      puts "Story ##{story.id}: #{story.name}"
+    end
+  end
+  task tasks_agenda2: :environment do
+    stories_arr = Story.
+      where(side_status: "Pending").
+      pluck(:id, :name)
+
+    print stories_arr
+    stories_arr.each do |id, name|
+      puts "Story #{id}: #{name}"
     end
   end
 end

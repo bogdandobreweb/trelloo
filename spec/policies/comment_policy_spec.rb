@@ -10,7 +10,7 @@ RSpec.describe CommentPolicy do
   let(:admin_role) { Role.create(name: 'admin') }
   let(:manager_role) { Role.create(name: 'manager') }
   let(:developer_role) { Role.create(name: 'developer') }
-  let(:comment) { Comment.create(name: 'Board') }
+  let(:comment) { Comment.create(name: 'Comment') }
 
   before do
     admin_role.update(user_id: user1.id)
@@ -23,58 +23,58 @@ RSpec.describe CommentPolicy do
   end
 
   permissions :index?, :show? do
-    it 'allows admin to see all boards' do
-      expect(subject).to permit(user1, board)
+    it 'allows admin to see all comments' do
+      expect(subject).to permit(user1, comment)
     end
 
-    it 'allows manager to see a board' do
-      expect(subject).to permit(user2, board)
+    it 'allows manager to see a comment' do
+      expect(subject).to permit(user2, comment)
     end
 
-    it 'allows developer to see a board' do
-      expect(subject).to permit(user3, board)
+    it 'allows developer to see a comment' do
+      expect(subject).to permit(user3, comment)
     end
   end
 
   permissions :update?, :edit? do
-    it 'allows admin to update and edit all boards' do
-      expect(subject).to permit(user1, board)
+    it 'allows admin to update and edit all comments' do
+      expect(subject).to permit(user1, comment)
     end
 
-    it 'allows manager to update and edit a board' do
-      expect(subject).to permit(user2, board)
+    it 'allows manager to update and edit a comment' do
+      expect(subject).to permit(user2, comment)
     end
 
-    it 'does not allow developer to update or edit a board' do
-      expect(subject).not_to permit(user3, board)
+    it 'does not allow developer to update or edit a comment' do
+      expect(subject).not_to permit(user3, comment)
     end
   end
 
   permissions :create? do
-    it 'allows admin to create a board' do
-      expect(subject).to permit(user1, board)
+    it 'allows admin to create a comment' do
+      expect(subject).to permit(user1, comment)
     end
 
-    it 'allows manager to create a board' do
-      expect(subject).to permit(user2, board)
+    it 'allows manager to create a comment' do
+      expect(subject).to permit(user2, comment)
     end
 
-    it "doesn't allow developer to create a board" do
-      expect(subject).to_not permit(user3, board)
+    it "doesn't allow developer to create a comment" do
+      expect(subject).to_not permit(user3, comment)
     end
   end
 
   permissions :destroy? do
-    it 'allows admin to destroy a board' do
-      expect(subject).to permit(user1, board)
+    it 'allows admin to destroy a comment' do
+      expect(subject).to permit(user1, comment)
     end
 
-    it "doesn't allow manager to destroy a board" do
-      expect(subject).to_not permit(user2, board)
+    it "doesn't allow manager to destroy a comment" do
+      expect(subject).to_not permit(user2, comment)
     end
 
-    it "doesn't allow developer to destroy a board" do
-      expect(subject).to_not permit(user3, board)
+    it "doesn't allow developer to destroy a comment" do
+      expect(subject).to_not permit(user3, comment)
     end
   end
 end
